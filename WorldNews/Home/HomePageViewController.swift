@@ -18,14 +18,17 @@ class HomePageViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let nib = UINib(nibName: "NewsCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "cell")
-        setupRefreshControl()
         fetchArticles()
+        let nib = UINib(nibName: "TableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "tableViewCell")
+        setupRefreshControl()
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        fetchArticles()
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
@@ -35,30 +38,36 @@ class HomePageViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        articles.count
+         articles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! NewsCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tableViewCell", for: indexPath) as! TableViewCell
 
-        cell.articleImage.image = downloadImage(from: articles[indexPath.row].url ?? "https://ichef.bbci.co.uk/news/1024/branded_news/EC1E/production/_130264406_whatsappimage2022-10-29at12.02.24.jpg")
-        cell.articleTitle.text = articles[indexPath.row].title
-        cell.articleDescription.text = articles[indexPath.row].description
-        cell.articleDate.text = articles[indexPath.row].url
+//        cell.articleImage.image = downloadImage(from: articles[indexPath.row].url ??
+//        cell.articleTitle.text = articles[indexPath.row].title
+//        cell.articleDescription.text = articles[indexPath.row].description
+//        cell.articleDate.text = articles[indexPath.row].source?.name
+//        cell.cellContentView.layoutMargins.bottom = 28.0
+        cell.titleLabel.text = articles[indexPath.row].title
+        cell.descriptionLabel.text = articles[indexPath.row].description
+        cell.dateLabel.text = articles[indexPath.row].source?.name
+        tableView.separatorStyle = .none
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.showArticle(with: articles[indexPath.row].url ?? "https://ichef.bbci.co.uk/news/1024/branded_news/EC1E/production/_130264406_whatsappimage2022-10-29at12.02.24.jpg")
+        showArticle(with: articles[indexPath.row].url ?? "https://ichef.bbci.co.uk/news")
     }
     
     func fetchArticles() {
         service.fetchArticles { [weak self] article in
-            self?.articles = article.articles ?? []
+            self?.articles = article.articles?.shuffled() ?? []
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
         }
+        tableView.reloadData()
     }
     
     @objc func refresh(_ sender: AnyObject) {
@@ -87,7 +96,7 @@ extension HomePageViewController {
     }
     
     func downloadImage(from url: String) -> UIImage? {
-        
+
         guard let formattedURL = URL(string: url) else { return nil }
         service.getData(from: formattedURL) { data, response, error in
             guard let data = data, error == nil else { return }
@@ -97,4 +106,5 @@ extension HomePageViewController {
         }
         return imageView
     }
+    
 }

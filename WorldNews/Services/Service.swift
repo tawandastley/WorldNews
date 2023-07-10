@@ -6,7 +6,9 @@
 //
 
 import UIKit
-struct Service {
+import SafariServices
+
+class Service: UIViewController {
     
     func fetchArticles(completion: @escaping(NewsArticles)-> Void) {
         let url = "https://newsapi.org/v2/everything?q=apple&from=2023-07-02&to=2023-07-02&sortBy=popularity&apiKey=ec44405378314f5eb754470cd0f98af4"
@@ -34,4 +36,6 @@ struct Service {
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
+    
+   
 }

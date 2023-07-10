@@ -17,7 +17,7 @@ class NewsCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-       
+        cellContentView.layoutMargins.bottom = 8.0
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9D3A473B2A51D4BC00DA8537 /* newsletter.json in Resources */ = {isa = PBXBuildFile; fileRef = 9D3A473A2A51D4BC00DA8537 /* newsletter.json */; };
+		9D5DB70F2A5C55F800972C6E /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5DB70D2A5C55F800972C6E /* TableViewCell.swift */; };
+		9D5DB7102A5C55F800972C6E /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D5DB70E2A5C55F800972C6E /* TableViewCell.xib */; };
 		9D70CE1F2A51DECF000726B3 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D70CE1D2A51DECF000726B3 /* NewsCell.swift */; };
 		9D70CE202A51DECF000726B3 /* NewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D70CE1E2A51DECF000726B3 /* NewsCell.xib */; };
 		9D70CE292A52CC14000726B3 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D70CE262A52CC14000726B3 /* Source.swift */; };
@@ -49,6 +51,8 @@
 
 /* Begin PBXFileReference section */
 		9D3A473A2A51D4BC00DA8537 /* newsletter.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = newsletter.json; sourceTree = "<group>"; };
+		9D5DB70D2A5C55F800972C6E /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		9D5DB70E2A5C55F800972C6E /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
 		9D70CE1D2A51DECF000726B3 /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 		9D70CE1E2A51DECF000726B3 /* NewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsCell.xib; sourceTree = "<group>"; };
 		9D70CE262A52CC14000726B3 /* Source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
@@ -105,6 +109,8 @@
 			children = (
 				9D70CE1D2A51DECF000726B3 /* NewsCell.swift */,
 				9D70CE1E2A51DECF000726B3 /* NewsCell.xib */,
+				9D5DB70D2A5C55F800972C6E /* TableViewCell.swift */,
+				9D5DB70E2A5C55F800972C6E /* TableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -309,6 +315,7 @@
 				9D70CE202A51DECF000726B3 /* NewsCell.xib in Resources */,
 				9DB8208B2A51A7250070CB28 /* Assets.xcassets in Resources */,
 				9DB820B42A51C53F0070CB28 /* HomePage.storyboard in Resources */,
+				9D5DB7102A5C55F800972C6E /* TableViewCell.xib in Resources */,
 				9D3A473B2A51D4BC00DA8537 /* newsletter.json in Resources */,
 				9DB820862A51A7220070CB28 /* Main.storyboard in Resources */,
 			);
@@ -341,6 +348,7 @@
 				9DB8207F2A51A7220070CB28 /* AppDelegate.swift in Sources */,
 				9DB820812A51A7220070CB28 /* SceneDelegate.swift in Sources */,
 				9D70CE2D2A52CD2E000726B3 /* Service.swift in Sources */,
+				9D5DB70F2A5C55F800972C6E /* TableViewCell.swift in Sources */,
 				9D70CE292A52CC14000726B3 /* Source.swift in Sources */,
 				9DB820B22A51BB1A0070CB28 /* HomePageViewController.swift in Sources */,
 				9D70CE1F2A51DECF000726B3 /* NewsCell.swift in Sources */,
