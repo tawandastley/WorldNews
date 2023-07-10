@@ -8,7 +8,7 @@
 import UIKit
 import SafariServices
 
-class HomePageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class HomePageViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     let service = Service()
@@ -16,14 +16,14 @@ class HomePageViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var imageView: UIImage!
     var refreshControl = UIRefreshControl()
     
+    //MARK: Lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchArticles()
         let nib = UINib(nibName: "TableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "tableViewCell")
         setupRefreshControl()
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,8 +34,10 @@ class HomePageViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.isNavigationBarHidden = false
     }
+    
+    //MARK: tableView methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
          articles.count
@@ -43,68 +45,52 @@ class HomePageViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableViewCell", for: indexPath) as! TableViewCell
-
-//        cell.articleImage.image = downloadImage(from: articles[indexPath.row].url ??
-//        cell.articleTitle.text = articles[indexPath.row].title
-//        cell.articleDescription.text = articles[indexPath.row].description
-//        cell.articleDate.text = articles[indexPath.row].source?.name
-//        cell.cellContentView.layoutMargins.bottom = 28.0
         cell.titleLabel.text = articles[indexPath.row].title
         cell.descriptionLabel.text = articles[indexPath.row].description
         cell.dateLabel.text = articles[indexPath.row].source?.name
-        tableView.separatorStyle = .none
+        tableView.separatorStyle = .singleLine
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         showArticle(with: articles[indexPath.row].url ?? "https://ichef.bbci.co.uk/news")
     }
+}
+
+//MARK: Extension TableView methods
+
+extension HomePageViewController{
+
+    //MARK: private methods
     
-    func fetchArticles() {
+    @objc private func refresh(_ sender: AnyObject) {
+        fetchArticles()
+        refreshControl.endRefreshing()
+    }
+    
+    private func setupRefreshControl() {
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        //tableView.addSubview(refreshControl) // not required when using UITableViewController
+    }
+    
+    private func showArticle(with url: String) {
+        if let url = URL(string: url) {
+            let config = SFSafariViewController.Configuration()
+            config.entersReaderIfAvailable = true
+            let viewController = SFSafariViewController(url: url, configuration: config)
+            present(viewController, animated: true)
+        }
+    }
+    
+    private func fetchArticles() {
         service.fetchArticles { [weak self] article in
-            self?.articles = article.articles?.shuffled() ?? []
+            self?.articles = article.articles ?? []
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
         }
         tableView.reloadData()
-    }
-    
-    @objc func refresh(_ sender: AnyObject) {
-        fetchArticles()
-        refreshControl.endRefreshing()
-    }
-    
-    func setupRefreshControl() {
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
-        tableView.addSubview(refreshControl) // not required when using UITableViewController
-    }
-    
-}
-
-extension HomePageViewController {
-    
-    func showArticle(with url: String) {
-        if let url = URL(string: url) {
-            let config = SFSafariViewController.Configuration()
-            config.entersReaderIfAvailable = true
-
-            let vc = SFSafariViewController(url: url, configuration: config)
-            present(vc, animated: true)
-        }
-    }
-    
-    func downloadImage(from url: String) -> UIImage? {
-
-        guard let formattedURL = URL(string: url) else { return nil }
-        service.getData(from: formattedURL) { data, response, error in
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async {
-                self.imageView = UIImage(data: data)
-            }
-        }
-        return imageView
     }
     
 }
