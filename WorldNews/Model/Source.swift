@@ -10,7 +10,6 @@ struct Source: Codable {
 
     case id   = "id"
     case name = "name"
-  
   }
 
   init(from decoder: Decoder) throws {
@@ -18,11 +17,8 @@ struct Source: Codable {
 
     id   = try values.decodeIfPresent(String.self , forKey: .id   )
     name = try values.decodeIfPresent(String.self , forKey: .name )
- 
   }
 
-  init() {
-
-  }
+    init() { }
 
 }

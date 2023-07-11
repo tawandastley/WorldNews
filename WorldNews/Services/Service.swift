@@ -17,15 +17,15 @@ class Service: UIViewController {
         let task = session.dataTask(with: formatedURL) { data, response, error in
             if error == nil , data != nil {
                 
-            let decoder = JSONDecoder()
-            do {
-                let decodedData = try decoder.decode(NewsArticles.self, from: data!)
-                completion(decodedData)
+                let decoder = JSONDecoder()
+                do {
+                    let decodedData = try decoder.decode(NewsArticles.self, from: data!)
+                    completion(decodedData)
+                }
+                catch {
+                    print(error)
+                }
             }
-            catch {
-                print(error)
-            }
-        }
             else if error != nil{
                 
             }
@@ -37,5 +37,5 @@ class Service: UIViewController {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
     
-   
+    
 }

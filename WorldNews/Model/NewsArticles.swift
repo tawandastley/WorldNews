@@ -12,7 +12,6 @@ struct NewsArticles: Codable {
     case status       = "status"
     case totalResults = "totalResults"
     case articles     = "articles"
-  
   }
 
   init(from decoder: Decoder) throws {
@@ -21,11 +20,8 @@ struct NewsArticles: Codable {
     status       = try values.decodeIfPresent(String.self     , forKey: .status       )
     totalResults = try values.decodeIfPresent(Int.self        , forKey: .totalResults )
     articles     = try values.decodeIfPresent([Articles].self , forKey: .articles     )
- 
   }
 
-  init() {
-
-  }
+  init() { }
 
 }

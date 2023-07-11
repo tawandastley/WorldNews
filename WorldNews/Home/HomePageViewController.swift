@@ -53,7 +53,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate,UITableViewD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        showArticle(with: articles[indexPath.row].url ?? "https://ichef.bbci.co.uk/news")
+        showArticle(from: articles[indexPath.row].url ?? "https://ichef.bbci.co.uk/news")
     }
 }
 
@@ -74,7 +74,7 @@ extension HomePageViewController{
         //tableView.addSubview(refreshControl) // not required when using UITableViewController
     }
     
-    private func showArticle(with url: String) {
+    private func showArticle(from url: String) {
         if let url = URL(string: url) {
             let config = SFSafariViewController.Configuration()
             config.entersReaderIfAvailable = true
@@ -92,5 +92,4 @@ extension HomePageViewController{
         }
         tableView.reloadData()
     }
-    
 }

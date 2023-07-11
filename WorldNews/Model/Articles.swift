@@ -22,7 +22,6 @@ struct Articles: Codable {
     case urlToImage  = "urlToImage"
     case publishedAt = "publishedAt"
     case content     = "content"
-  
   }
 
   init(from decoder: Decoder) throws {
@@ -36,11 +35,8 @@ struct Articles: Codable {
     urlToImage  = try values.decodeIfPresent(String.self , forKey: .urlToImage  )
     publishedAt = try values.decodeIfPresent(String.self , forKey: .publishedAt )
     content     = try values.decodeIfPresent(String.self , forKey: .content     )
- 
   }
 
-  init() {
-
-  }
+  init() { }
 
 }

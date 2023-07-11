@@ -18,8 +18,6 @@ class ViewController: UIViewController {
         Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(loadHomePage), userInfo: nil, repeats: false)
     }
     
-  
-    
     @objc func loadHomePage() {
         let storyboard = UIStoryboard(name: "HomePage", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "HomePageViewController") as! HomePageViewController
